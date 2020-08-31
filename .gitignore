@@ -37,6 +37,7 @@
 */timing/
 */testbench/
 */*_sim/
+*/greybox_tmp/
 incremental_db/
 db/
 output_files/
