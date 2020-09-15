@@ -1,35 +1,57 @@
 `timescale 1ns/10ps
 module tb;
 
-reg clk = 0;
+reg i_clk = 0;
 
-
-wire [12:0] w_rom1_address;
-wire [5:0] w_rom1_data;
 wire [7:0] w_rom2_address;
 wire [23:0] w_rom2_data;
 
+wire [7:0] w_rom2_address_b;
+wire [23:0] w_rom2_data_b;
+
 wire w_clk;
 wire w_data_enable;
-wire [23:0] w_color;
+wire [23:0] w_color1;
+wire [23:0] w_color2;
+wire [23:0] w_color3;
 
 wire [8:0] w_x;
 wire [8:0] w_y;
 
 wire w_clk_pll;
 
-wire [7:0] w_red;
-wire [7:0] w_green;
-wire [7:0] w_blue;
+wire w_layer_active;
 
-	PLL pll (clk, w_clk_pll);
-	//ROM_1PORT background (w_rom1_address, w_clk_pll, w_rom1_data);
-	background_generator background (w_clk_pll, 2'b00, w_rom1_address, w_rom1_data);
-	ROM_2PORT tiles (.address_a (w_rom2_address), .clock_a (w_clk_pll), .q_a (w_rom2_data));
-	layer0 bg (w_clk_pll, w_clk, w_x, w_y, w_rom1_data, w_rom2_data, w_rom1_address, w_rom2_address, w_color);
-	lcd_driver lcd (clk, w_color, w_clk, w_data_enable, w_red, w_green, w_blue, w_x, w_y);
+wire [1:0] w_rotate;
+wire [4:0] w_ram_address;
+wire [7:0] w_ram_data;
+wire [5:0] w_data;
+wire [12:0] w_address;
+wire w_ram_clk;
+
+wire [7:0] w_ps2_data;
+wire w_ps2_data_valid;
+wire [7:0] w_code;
+wire w_code_valid;
+
+wire [4:0] w_ram_address_control_side;
+wire [7:0] w_ram_data_control_side;
+wire w_ram_wren;
+
+	PLL pll (i_clk, w_clk_pll);
+	ROM_2PORT tiles (.address_a (w_rom2_address), .address_b (w_rom2_address_b), .clock_a (w_clk_pll), .clock_b (w_clk_pll), .q_a (w_rom2_data), .q_b (w_rom2_data_b));
+	layer0 bg (w_clk_pll, w_clk, 2'b00, w_x, w_y, w_rom2_data, w_rom2_address, w_color1);
+	lcd_driver lcd (i_clk, w_color3, w_clk, w_data_enable, o_red, o_green, o_blue, w_x, w_y);
+	
+	RAM_2PORT ram (w_ram_data_control_side, w_ram_address, w_clk_pll, w_ram_address_control_side, w_clk_pll, w_ram_wren, w_ram_data);
+	layer1 toplayer (w_clk_pll, w_clk, w_data_enable, w_x, w_y, w_rom2_data_b, w_ram_data, w_rom2_address_b, w_ram_address, w_color2, w_layer_active);
+	color_mixer mixer (w_color1, w_color2, w_layer_active, w_color3);
+	
+	ps2_reader reader (i_clk, i_ps2_clk, i_ps2_data, w_ps2_data, w_ps2_data_valid);
+	ps2_interpreter interpreter (i_clk, w_ps2_data, w_ps2_data_valid, w_code, w_code_valid);
+	game control (i_clk, w_code, w_code_valid, w_ram_address_control_side, w_ram_data_control_side, w_ram_wren);
 	
 	
-always  #10 clk <= ~clk;
+always  #10 i_clk <= ~i_clk;
 
 endmodule

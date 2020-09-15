@@ -1,0 +1,279 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/itvchi/Pulpit/PONG/simulation/modelsim
+vclk_div4
+Z1 !s110 1599514836
+!i10b 1
+!s100 <NMV3O7cgRXFj_eEd0jNU3
+I0c6JU0hW@8R3_4VND>?M73
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1598784828
+8/home/itvchi/Pulpit/PONG/clk_div4.v
+F/home/itvchi/Pulpit/PONG/clk_div4.v
+L0 1
+Z3 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z4 !s108 1599514836.000000
+!s107 /home/itvchi/Pulpit/PONG/clk_div4.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/itvchi/Pulpit/PONG|/home/itvchi/Pulpit/PONG/clk_div4.v|
+!i113 1
+Z5 o-vlog01compat -work work
+Z6 !s92 -vlog01compat -work work +incdir+/home/itvchi/Pulpit/PONG
+Z7 tCvgOpt 0
+vcolor_mixer
+Z8 !s110 1599514835
+!i10b 1
+!s100 `8bF<JRhbUa[P`Odo@oU71
+I:>QKcYD5Bac5GcIl2_3g32
+R2
+R0
+w1598779610
+8/home/itvchi/Pulpit/PONG/color_mixer.v
+F/home/itvchi/Pulpit/PONG/color_mixer.v
+L0 1
+R3
+r1
+!s85 0
+31
+Z9 !s108 1599514835.000000
+!s107 /home/itvchi/Pulpit/PONG/color_mixer.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/itvchi/Pulpit/PONG|/home/itvchi/Pulpit/PONG/color_mixer.v|
+!i113 1
+R5
+R6
+R7
+vdata_enable
+R1
+!i10b 1
+!s100 cTzaC7l<EIO0GX;C8:U>G2
+I1?7dR]4oACJjzBd2[JN=]0
+R2
+R0
+w1599152480
+8/home/itvchi/Pulpit/PONG/data_enable.v
+F/home/itvchi/Pulpit/PONG/data_enable.v
+L0 1
+R3
+r1
+!s85 0
+31
+R9
+!s107 /home/itvchi/Pulpit/PONG/data_enable.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/itvchi/Pulpit/PONG|/home/itvchi/Pulpit/PONG/data_enable.v|
+!i113 1
+R5
+R6
+R7
+vlayer0
+R8
+!i10b 1
+!s100 1;Dk3G9PCB6e:=>SR2Ne;3
+Il2aC55XO@`IOD@dHYQQmW2
+R2
+R0
+w1599154260
+8/home/itvchi/Pulpit/PONG/layer0.v
+F/home/itvchi/Pulpit/PONG/layer0.v
+L0 1
+R3
+r1
+!s85 0
+31
+R9
+!s107 /home/itvchi/Pulpit/PONG/layer0.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/itvchi/Pulpit/PONG|/home/itvchi/Pulpit/PONG/layer0.v|
+!i113 1
+R5
+R6
+R7
+vlayer1
+R1
+!i10b 1
+!s100 fS>LEfa]d<gzX;ogT5ED50
+Iz9dIQ>?]17P2ncbMeMak^2
+R2
+R0
+w1599514595
+8/home/itvchi/Pulpit/PONG/layer1.v
+F/home/itvchi/Pulpit/PONG/layer1.v
+L0 1
+R3
+r1
+!s85 0
+31
+R4
+!s107 /home/itvchi/Pulpit/PONG/layer1.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/itvchi/Pulpit/PONG|/home/itvchi/Pulpit/PONG/layer1.v|
+!i113 1
+R5
+R6
+R7
+vlcd_driver
+R1
+!i10b 1
+!s100 7oBk[k^`R>XE9TjfgWaMO2
+IoZV_R^2@R[g_g7^mBiPo>3
+R2
+R0
+w1598788664
+8/home/itvchi/Pulpit/PONG/lcd_driver.v
+F/home/itvchi/Pulpit/PONG/lcd_driver.v
+L0 1
+R3
+r1
+!s85 0
+31
+R4
+!s107 /home/itvchi/Pulpit/PONG/lcd_driver.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/itvchi/Pulpit/PONG|/home/itvchi/Pulpit/PONG/lcd_driver.v|
+!i113 1
+R5
+R6
+R7
+vPLL
+R1
+!i10b 1
+!s100 f^<k2D8Gj7PMANY;X]:J@0
+IClK6XlVCfY]AYX?l4LOoN2
+R2
+R0
+w1598798344
+8/home/itvchi/Pulpit/PONG/PLL.v
+F/home/itvchi/Pulpit/PONG/PLL.v
+Z10 L0 40
+R3
+r1
+!s85 0
+31
+R4
+!s107 /home/itvchi/Pulpit/PONG/PLL.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/itvchi/Pulpit/PONG|/home/itvchi/Pulpit/PONG/PLL.v|
+!i113 1
+R5
+R6
+R7
+n@p@l@l
+vPLL_altpll
+R1
+!i10b 1
+!s100 Rg3>E:`^c76>Y=WFTTXc:0
+I3^WmEB@z5Vn50IZl;9Ka:1
+R2
+R0
+w1599448507
+8/home/itvchi/Pulpit/PONG/db/PLL_altpll.v
+F/home/itvchi/Pulpit/PONG/db/PLL_altpll.v
+L0 30
+R3
+r1
+!s85 0
+31
+R4
+!s107 /home/itvchi/Pulpit/PONG/db/PLL_altpll.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/itvchi/Pulpit/PONG/db|/home/itvchi/Pulpit/PONG/db/PLL_altpll.v|
+!i113 1
+R5
+!s92 -vlog01compat -work work +incdir+/home/itvchi/Pulpit/PONG/db
+R7
+n@p@l@l_altpll
+vPONG_GAME
+R1
+!i10b 1
+!s100 d2e^0keOT_<eR1VW24el;0
+IIEebC>MBi_1Pf>391a1Ij3
+R2
+R0
+w1599514039
+8/home/itvchi/Pulpit/PONG/PONG_GAME.v
+F/home/itvchi/Pulpit/PONG/PONG_GAME.v
+L0 1
+R3
+r1
+!s85 0
+31
+R4
+!s107 /home/itvchi/Pulpit/PONG/PONG_GAME.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/itvchi/Pulpit/PONG|/home/itvchi/Pulpit/PONG/PONG_GAME.v|
+!i113 1
+R5
+R6
+R7
+n@p@o@n@g_@g@a@m@e
+vRAM_2PORT
+R1
+!i10b 1
+!s100 45BalHZd5gh83Ec8EA62?1
+Ie@Z1@?4AdK[bMNPUF_Mio1
+R2
+R0
+w1598896510
+8/home/itvchi/Pulpit/PONG/RAM_2PORT.v
+F/home/itvchi/Pulpit/PONG/RAM_2PORT.v
+R10
+R3
+r1
+!s85 0
+31
+R4
+!s107 /home/itvchi/Pulpit/PONG/RAM_2PORT.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/itvchi/Pulpit/PONG|/home/itvchi/Pulpit/PONG/RAM_2PORT.v|
+!i113 1
+R5
+R6
+R7
+n@r@a@m_2@p@o@r@t
+vROM_2PORT
+R1
+!i10b 1
+!s100 U:3jgX9N7bSNaj=@T5K5Z0
+I?b?FAC@WckX=ZP[bWI5Rz3
+R2
+R0
+w1598809362
+8/home/itvchi/Pulpit/PONG/ROM_2PORT.v
+F/home/itvchi/Pulpit/PONG/ROM_2PORT.v
+R10
+R3
+r1
+!s85 0
+31
+R4
+!s107 /home/itvchi/Pulpit/PONG/ROM_2PORT.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/itvchi/Pulpit/PONG|/home/itvchi/Pulpit/PONG/ROM_2PORT.v|
+!i113 1
+R5
+R6
+R7
+n@r@o@m_2@p@o@r@t
+vtb
+R1
+!i10b 1
+!s100 IkdDURJTTm`W9KERzGXko2
+I4@6Mb_kb5WJGQXRJnbfm`3
+R2
+R0
+w1599514748
+8/home/itvchi/Pulpit/PONG/tb.v
+F/home/itvchi/Pulpit/PONG/tb.v
+L0 2
+R3
+r1
+!s85 0
+31
+R4
+!s107 /home/itvchi/Pulpit/PONG/tb.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/itvchi/Pulpit/PONG|/home/itvchi/Pulpit/PONG/tb.v|
+!i113 1
+R5
+R6
+R7

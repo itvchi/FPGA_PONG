@@ -1,24 +1,28 @@
 module layer0 (
 	input i_clk,
 	input i_lcd_clk,
+	input [1:0] i_bg_set,
 	input [8:0] i_x,
 	input [8:0] i_y,
-	input [5:0] i_rom1_data,
-	input [23:0] i_rom2_data,
-	output [12:0] o_rom1_address,
-	output [7:0] o_rom2_address,
+	input [23:0] i_rom_data,
+	output [7:0] o_rom_address,
 	output [23:0] o_color
 );
 
 localparam IDLE = 3'b000;
-localparam READ_ROM1 = 3'b001;
-localparam WAIT_DATA_ROM1 = 3'b010;
-localparam READ_ROM2 = 3'b011;
-localparam WAIT_DATA_ROM2 = 3'b100;
-localparam END = 3'b101;
+localparam WAIT = 3'b001;
+localparam CALC_ADDRESS = 3'b010;
+localparam WAIT_DATA = 3'b011;
+localparam END = 3'b100;
 
-reg [12:0] r_rom1_address;
-reg [7:0] r_rom2_address;
+localparam bg1 = 2'b00;
+localparam bg2 = 2'b01;
+localparam bg3 = 2'b10;
+localparam bg4 = 2'b11;
+
+reg [5:0] r_tile;
+
+reg [7:0] r_rom_address;
 reg [23:0] r_color = 24'd0;
 wire w_lcd_rising_edge;
 reg r_lcd_clk_last;
@@ -51,35 +55,29 @@ reg [2:0] r_state = IDLE;
 		begin
 			if(w_lcd_rising_edge) 
 			begin
-				r_state <= READ_ROM1;
+				r_state <= WAIT;
 			end 
 		end
 		
-		READ_ROM1:
+		WAIT:
 		begin
-			r_rom1_address <= (r_y[8:2] * 120) + r_x[8:2];
-			r_state <= WAIT_DATA_ROM1;
+			r_state <= CALC_ADDRESS;
 		end
 		
-		WAIT_DATA_ROM1:
+		CALC_ADDRESS:
 		begin
-			r_state <= READ_ROM2;
+			r_rom_address <= (r_tile * 16) + 4 * r_y[1:0] + r_x[1:0];
+			r_state <= WAIT_DATA;
 		end
 		
-		READ_ROM2:
-		begin
-			r_rom2_address <= (i_rom1_data * 16) + 4 * r_y[1:0] + r_x[1:0];
-			r_state <= WAIT_DATA_ROM2;
-		end
-		
-		WAIT_DATA_ROM2:
+		WAIT_DATA:
 		begin
 			r_state <= END;
 		end
 		
 		END:
 		begin
-			r_color <= i_rom2_data;
+			r_color <= i_rom_data;
 			r_state <= IDLE;
 		end
 		
@@ -87,10 +85,75 @@ reg [2:0] r_state = IDLE;
 		endcase
 	end
 	
+	always @ (posedge i_clk)
+	begin
+		case(i_bg_set)
+			bg1:
+			begin
+				if(r_y[8:2] == 7'd0 || r_y[8:2] == 7'd66)
+				begin
+					case(r_x[3:2])
+					2'b00: r_tile <= 6'd8;
+					2'b01: r_tile <= 6'd10;
+					2'b10: r_tile <= 6'd6;
+					2'b11: r_tile <= 6'd8;
+					default: r_tile <= 6'd12;
+					endcase
+				end
+				else if(r_y[8:2] == 7'd1 || r_y[8:2] == 7'd67)
+				begin
+					case(r_x[3:2])
+					2'b00: r_tile <= 6'd9;
+					2'b01: r_tile <= 6'd11;
+					2'b10: r_tile <= 6'd7;
+					2'b11: r_tile <= 6'd9;
+					default: r_tile <= 6'd12;
+					endcase
+				end
+				else if(r_y[8:2] == 7'd2 || r_y[8:2] == 7'd64)
+				begin
+					case(r_x[3:2])
+					2'b00: r_tile <= 6'd6;
+					2'b01: r_tile <= 6'd8;
+					2'b10: r_tile <= 6'd8;
+					2'b11: r_tile <= 6'd10;
+					default: r_tile <= 6'd12;
+					endcase
+				end
+				else if(r_y[8:2] == 7'd3 || r_y[8:2] == 7'd65)
+				begin
+					case(r_x[3:2])
+					2'b00: r_tile <= 6'd7;
+					2'b01: r_tile <= 6'd9;
+					2'b10: r_tile <= 6'd9;
+					2'b11: r_tile <= 6'd11;
+					default: r_tile <= 6'd12;
+					endcase
+				end
+				else
+				begin
+					r_tile <= 6'd12;
+				end
+			end
+			
+			bg2:
+			begin
+				r_tile <= 6'd12;
+			end
+			
+			bg3:
+			begin
+				r_tile <= 6'd12;
+			end
+			
+			default: r_tile <= 6'd12;
+		endcase
+	end
+	
+	
 	assign w_lcd_rising_edge = ~r_lcd_clk_last && i_lcd_clk;
 	
-	assign o_rom1_address = r_rom1_address;
-	assign o_rom2_address = r_rom2_address;
+	assign o_rom_address = r_rom_address;
 	assign o_color = r_color;
 
 endmodule

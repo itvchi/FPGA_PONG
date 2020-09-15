@@ -5,7 +5,7 @@ module data_enable (
 	 output [8:0] o_row
 );
 
-localparam TOTAL_HORIZONTAL = 525;
+localparam TOTAL_HORIZONTAL = 525; //61
 localparam TOTAL_VERTICAL = 290;
 localparam HORIZONTAL_BLANKING = 45;
 localparam VERTICAL_BLANKING = 18;

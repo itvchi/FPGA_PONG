@@ -1,0 +1,25 @@
+transcript on
+if {[file exists rtl_work]} {
+	vdel -lib rtl_work -all
+}
+vlib rtl_work
+vmap work rtl_work
+
+vlog -vlog01compat -work work +incdir+D:/fpga/Projects/PONG {D:/fpga/Projects/PONG/layer0.v}
+vlog -vlog01compat -work work +incdir+D:/fpga/Projects/PONG {D:/fpga/Projects/PONG/ROM_1PORT.v}
+vlog -vlog01compat -work work +incdir+D:/fpga/Projects/PONG {D:/fpga/Projects/PONG/data_enable.v}
+vlog -vlog01compat -work work +incdir+D:/fpga/Projects/PONG {D:/fpga/Projects/PONG/ROM_2PORT.v}
+vlog -vlog01compat -work work +incdir+D:/fpga/Projects/PONG {D:/fpga/Projects/PONG/lcd_driver.v}
+vlog -vlog01compat -work work +incdir+D:/fpga/Projects/PONG {D:/fpga/Projects/PONG/clk_div4.v}
+vlog -vlog01compat -work work +incdir+D:/fpga/Projects/PONG {D:/fpga/Projects/PONG/PONG_GAME.v}
+vlog -vlog01compat -work work +incdir+D:/fpga/Projects/PONG {D:/fpga/Projects/PONG/PLL.v}
+vlog -vlog01compat -work work +incdir+D:/fpga/Projects/PONG/db {D:/fpga/Projects/PONG/db/pll_altpll.v}
+
+vlog -vlog01compat -work work +incdir+D:/fpga/Projects/PONG {D:/fpga/Projects/PONG/tb.v}
+
+vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneive_ver -L rtl_work -L work -voptargs="+acc"  tb
+
+add wave *
+view structure
+view signals
+run -all

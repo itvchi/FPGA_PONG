@@ -1,6 +1,6 @@
 module background_generator (
 	input i_clk,
-	input [2:0] i_bg_set,
+	input [1:0] i_bg_set,
 	input [12:0] i_address,
 	output [5:0] o_data
 );
