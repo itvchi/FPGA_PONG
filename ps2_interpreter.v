@@ -8,48 +8,52 @@ module ps2_interpreter (
 	output o_code_valid
 );
 
-parameter IDLE = 2'b00;
-parameter DATA_BYTE = 2'b01;
-parameter DECODE = 2'b010;
-parameter END = 2'b11;
+localparam
+STATE_IDLE = 2'd0,
+STATE_DATA_BYTE = 2'd1,
+STATE_DECODE = 2'd2,
+STATE_END = 2'd3;
 
 // release => F0, key_code
-localparam keyEnter = 8'h5A;
-localparam keySpacebar = 8'h29;
+localparam 
+keyEnter = 8'h5A,
+keySpacebar = 8'h29;
 
 // release => F0, key_code
-localparam keyW = 8'h1D; 
-localparam keyS = 8'h1B; 
-localparam keyA = 8'h1C; 
-localparam keyD = 8'h23; 
+localparam 
+keyW = 8'h1D,
+keyS = 8'h1B,
+keyA = 8'h1C,
+keyD = 8'h23; 
 
 // press => E0, key_code
 // release => E0, F0, key_code
-localparam keyUP = 8'h75;
-localparam keyDOWN = 8'h72;
-localparam keyLEFT = 8'h6B;
-localparam keyRIGHT = 8'h74;
+localparam 
+keyUP = 8'h75,
+keyDOWN = 8'h72,
+keyLEFT = 8'h6B,
+keyRIGHT = 8'h74;
 
 reg [2:0] r_state = 0;
 reg [2:0] r_index = 0;
 reg [7:0] r_data [0:2];
 reg [7:0] r_code;
-reg r_code_valid ;
+reg r_code_valid;
 reg [17:0] r_counter = 0;
 
 	always @ (posedge i_clk)
 	begin
-		case (r_state)
-			IDLE:
+		case(r_state)
+			STATE_IDLE:
 			begin
 				r_counter <= 18'b0;
 				r_code_valid <= 0;
-				r_index <=0;
+				r_index <= 0;
 				
-				if(i_convert == 1'b1) r_state <= DATA_BYTE;
+				if(i_convert == 1'b1) r_state <= STATE_DATA_BYTE;
 				else r_state <= IDLE;
 			end
-			DATA_BYTE:
+			STATE_DATA_BYTE:
 			begin
 				if(r_counter == 0) r_data[r_index] <= i_data;
 				else r_data[r_index] <= r_data[r_index];
@@ -57,30 +61,30 @@ reg [17:0] r_counter = 0;
 				if(r_counter == 18'd250000)
 				begin
 					r_counter <= 18'b0;
-					r_state <= DECODE;
+					r_state <= STATE_DECODE;
 				end
 				else if(i_convert == 1'b1)
 				begin
-					if(r_index<2)
+					if(r_index < 2)
 					begin
 						r_counter <= 18'b0;
 						r_index <= r_index + 1;
-						r_state <= DATA_BYTE;
+						r_state <= STATE_DATA_BYTE;
 					end
 					else
 					begin
 						r_counter <= 18'b0;
 						r_index <= 0;
-						r_state <= DECODE;
+						r_state <= STATE_DECODE;
 					end
 				end
 				else 
 				begin
 					r_counter <= r_counter + 18'd1;
-					r_state <= DATA_BYTE;
+					r_state <= STATE_DATA_BYTE;
 				end
 			end
-			DECODE:
+			STATE_DECODE:
 			begin
 				case(r_data[0])
 					keyW: r_code <= 8'h00;
@@ -124,16 +128,16 @@ reg [17:0] r_counter = 0;
 					default: r_code <= 8'hFF;
 				endcase
 				
-				r_state <= END;
+				r_state <= STATE_END;
 			end
-			END:
+			STATE_END:
 			begin
 				r_code_valid <= 1'b1;
-				r_state <= IDLE;
+				r_state <= STATE_IDLE;
 			end
 			default:
 			begin
-				r_state <= IDLE;
+				r_state <= STATE_IDLE;
 			end
 		endcase
 	end
