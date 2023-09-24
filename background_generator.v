@@ -1,81 +1,32 @@
-module background_generator (input i_clk,
-							input [1:0] i_bg_set,
-							input [12:0] i_address,
-							output [5:0] o_data);
+module background_generator (input [6:0] i_tile_x,
+							input [6:0] i_tile_y,
+							output reg [3:0] o_tile_no);
 
-localparam 
-bg1 = 2'b00,
-bg2 = 2'b01,
-bg3 = 2'b10,
-bg4 = 2'b11;
+reg [3:0] tile_memory [9:0];
 
-reg [5:0] r_data;
+initial begin
+	/* First layer brick tile_no - upper half */
+	tile_memory[0] = 8;
+	tile_memory[1] = 10;
+	tile_memory[2] = 6;
+	tile_memory[3] = 8;
+	/* Second layer brick tile_no - lower half */
+	tile_memory[4] = 9;
+	tile_memory[5] = 11;
+	tile_memory[6] = 7;
+	tile_memory[7] = 9;
+end
 
-always @(posedge i_clk)
-begin
-	case(i_bg_set)
-		bg1:
-		begin
-			if((i_address < 120) || (i_address >= 7920 && i_address < 8039))
-			begin
-				case(i_address[1:0])
-				2'b00: r_data <= 6'd8;
-				2'b01: r_data <= 6'd10;
-				2'b10: r_data <= 6'd6;
-				2'b11: r_data <= 6'd8;
-				default: r_data <= 6'd12;
-				endcase
-			end
-			else if((i_address >= 120 && i_address < 240) || (i_address >= 8040 && i_address < 8160))
-			begin
-				case(i_address[1:0])
-				2'b00: r_data <= 6'd9;
-				2'b01: r_data <= 6'd11;
-				2'b10: r_data <= 6'd7;
-				2'b11: r_data <= 6'd9;
-				default: r_data <= 6'd12;
-				endcase
-			end
-			else if((i_address >= 240 && i_address < 360) || (i_address >= 7680 && i_address < 7800))
-			begin
-				case(i_address[1:0])
-				2'b00: r_data <= 6'd6;
-				2'b01: r_data <= 6'd8;
-				2'b10: r_data <= 6'd8;
-				2'b11: r_data <= 6'd10;
-				default: r_data <= 6'd12;
-				endcase
-			end
-			else if((i_address >= 360 && i_address < 480) || (i_address >= 7800 && i_address < 7920))
-			begin
-				case(i_address[1:0])
-				2'b00: r_data <= 6'd7;
-				2'b01: r_data <= 6'd9;
-				2'b10: r_data <= 6'd9;
-				2'b11: r_data <= 6'd11;
-				default: r_data <= 6'd12;
-				endcase
-			end
-			else if(i_address >= 480 && i_address < 7679)
-			begin
-				r_data <= 6'd12;
-			end
-		end
-		
-		bg2:
-		begin
-			r_data <= 6'd12;
-		end
-		
-		bg3:
-		begin
-			r_data <= 6'd12;
-		end
-		
-		default: r_data <= 6'd12;
+always @(*) begin
+	casex (i_tile_y)
+		/* 6th bit is ?, because when it is 1, 4 layers left to display on the screen and they are brick layers */
+		7'b?000000: o_tile_no <= tile_memory[0 + i_tile_x[1:0]];
+		7'b?000001: o_tile_no <= tile_memory[4 + i_tile_x[1:0]];
+		/* Offset next 2 layers (second layer of bricks) by i_tile_x[1] bit negation */
+		7'b?000010: o_tile_no <= tile_memory[0 + {~i_tile_x[1], i_tile_x[0]}];
+		7'b?000011: o_tile_no <= tile_memory[4 + {~i_tile_x[1], i_tile_x[0]}];
+		default: o_tile_no <= 12; /* Tile between brick layers */ 
 	endcase
 end
 
-	assign o_data = r_data; 
-	
 endmodule
